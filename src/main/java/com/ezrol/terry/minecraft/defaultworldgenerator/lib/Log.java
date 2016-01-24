@@ -1,11 +1,11 @@
-package com.fireball1725.defaultworldgenerator.lib;
+package com.ezrol.terry.minecraft.defaultworldgenerator.lib;
 
-import cpw.mods.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
+import net.minecraftforge.fml.common.FMLLog;
 
 public class Log {
     public static void log(Level logLevel, Object object) {
-        FMLLog.log(Reference.MOD_NAME, logLevel, String.valueOf(object));
+    	FMLLog.log(Reference.MOD_NAME, logLevel, String.valueOf(object));
     }
 
     public static void all(Object object) {
@@ -20,7 +20,7 @@ public class Log {
         log(Level.TRACE, object);
     }
 
-    public static void fatal(Object object) {
+    public static void fatal(Object object) { 
         log(Level.FATAL, object);
     }
 

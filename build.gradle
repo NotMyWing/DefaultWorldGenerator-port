@@ -1,64 +1,40 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
 
-apply plugin: 'forge'
-apply plugin: "curseforge"
-apply plugin: "maven-publish"
+apply plugin: 'net.minecraftforge.gradle.forge'
 
-ext.configFile = file "build.properties"
-
-configFile.withReader {
-    // read config.  it shall from now on be referenced as simply config or as project.config
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
+/*
+// for people who want stable - not yet functional for MC 1.8.9 - we require the forgegradle 2.1 snapshot
+plugins {
+    id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
+*/
 
-def buildversion = '0'
-
-if (hasProperty("teamcity")) {
-    buildversion = teamcity["build.number"]
-}
-
-sourceCompatibility = JavaVersion.VERSION_1_6
-targetCompatibility = JavaVersion.VERSION_1_6
-
-version = "${config.mod_version}"
-group= "com.fireball1725.defaultworldgenerator" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "DefaultWorldGenerator"
+version = 0.3
+group= "com.ezrol.terry.minecraft.defaultworldgenerator" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "DefaultWorldGenerator-port-1.8.9"
 
 minecraft {
-    version = "${config.minecraft_version}-${config.forge_version}"
-    runDir = "eclipse"
-
-    replaceIn "lib/Reference.java"
-    replace "@VERSION@", "${config.mod_version}-b"+buildversion
-    replace "@BUILDNUMBER@", buildversion
-
-    replaceIn "DefaultWorldGenerator.java"
-    replace "@DEBUG@", "somethingthatisnot-@DEBUG@"
-}
-
-version = "${config.minecraft_version}-"+version+"-b"+buildversion
-
-configurations {
-    shade
-    //include it in compile
-    compile.extendsFrom shade
+    version = "1.8.9-11.15.0.1715"
+    runDir = "run"
+    
+    // the mappings can be changed at any time, and must be in the following format.
+    // snapshot_YYYYMMDD   snapshot are built nightly.
+    // stable_#            stables are built at the discretion of the MCP team.
+    // Use non-default mappings at your own risk. they may not allways work.
+    // simply re-run your setup task after changing the mappings to update your workspace.
+    mappings = "stable_20"
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
 dependencies {
@@ -70,20 +46,11 @@ dependencies {
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-    shade 'com.github.nkzawa:socket.io-client:0.3.0'
-
+    
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-}
-
-jar {
-    configurations.shade.each { dep ->
-        from(project.zipTree(dep)) {
-            exclude 'META-INF', 'META-INF/**'
-        }
-    }
 }
 
 processResources
@@ -106,32 +73,5 @@ processResources
             }
         }
 
-//Add universal identifier to jar name
-jar {
-    classifier = 'universal'
-}
 
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
-}
-
-task sourceJar(type: Jar) {
-    from sourceSets.main.allSource
-    classifier = 'source'
-}
-
-artifacts {
-    archives deobfJar
-}
-
-curse {
-    apiKey = project.fireball1725curse
-    projectId = "226188"
-    changelog = file("build/libs/changelog.txt").text
-    releaseType = "release"
-    addGameVersion "1.7.10"
-}
-
-build.dependsOn sourceJar
 

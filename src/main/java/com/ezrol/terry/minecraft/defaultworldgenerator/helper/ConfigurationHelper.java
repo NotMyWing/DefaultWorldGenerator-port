@@ -1,4 +1,4 @@
-package com.fireball1725.defaultworldgenerator.helper;
+package com.ezrol.terry.minecraft.defaultworldgenerator.helper;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
