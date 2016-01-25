@@ -40,7 +40,7 @@ public class ConfigurationFile {
 						"Lock Worldtype",
 						"general",
 						false,
-						"Prevent the user from changing the world type, I highly discourage setting this.");
+						"Prevent the user from changing the world type.");
 
 		if (configuration.hasChanged()) {
 			configuration.save();
