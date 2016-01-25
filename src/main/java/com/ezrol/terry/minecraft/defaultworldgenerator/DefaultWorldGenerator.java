@@ -12,12 +12,13 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigGeneralSettings;
 import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigurationFile;
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.ServerDefaults;
 import com.ezrol.terry.minecraft.defaultworldgenerator.events.GuiEvents;
 import com.ezrol.terry.minecraft.defaultworldgenerator.gui.guiReflectHelper;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Reference;
 
-@Mod(modid = Reference.MOD_ID, version = Reference.VERSION_BUILD, name = Reference.MOD_NAME)
+@Mod(modid = Reference.MOD_ID, version = Reference.VERSION_BUILD, name = Reference.MOD_NAME, acceptableRemoteVersions = "*")
 public class DefaultWorldGenerator {
 	public static Configuration configuration;
 
@@ -47,6 +48,10 @@ public class DefaultWorldGenerator {
 				}
 			}
 			Log.info("==================================================================");
+		}
+		if (event.getSide() == Side.SERVER) {
+			Log.info("Injecting Server Defaults");
+			ServerDefaults.SetDefaults();
 		}
 	}
 }
