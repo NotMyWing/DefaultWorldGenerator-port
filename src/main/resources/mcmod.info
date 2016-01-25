@@ -2,14 +2,14 @@
 {
   "modid": "defaultworldgenerator-port",
   "name": "Default World Generator",
-  "description": "A small mod to automatically select the default world generator for single player",
+  "description": "A small mod to automatically select the default world generator for both single player and servers",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["EzTerry", "FireBall1725"],
   "credits": "EzTerry - 1.8.9 porter, FireBall1725 (original author), Special thanks to amadornes for reflection help",
-  "logoFile": "",
+  "logoFile": "defaultworldgen.png",
   "screenshots": [],
   "dependencies": []
 }
