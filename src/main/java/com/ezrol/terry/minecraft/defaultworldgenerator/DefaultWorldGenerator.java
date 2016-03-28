@@ -1,5 +1,13 @@
 package com.ezrol.terry.minecraft.defaultworldgenerator;
 
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigGeneralSettings;
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigurationFile;
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.ServerDefaults;
+import com.ezrol.terry.minecraft.defaultworldgenerator.events.GuiEvents;
+import com.ezrol.terry.minecraft.defaultworldgenerator.gui.guiReflectHelper;
+import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
+import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Reference;
+
 import net.minecraft.world.WorldType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -10,22 +18,13 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigGeneralSettings;
-import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigurationFile;
-import com.ezrol.terry.minecraft.defaultworldgenerator.config.ServerDefaults;
-import com.ezrol.terry.minecraft.defaultworldgenerator.events.GuiEvents;
-import com.ezrol.terry.minecraft.defaultworldgenerator.gui.guiReflectHelper;
-import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
-import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Reference;
-
 @Mod(modid = Reference.MOD_ID, version = Reference.VERSION_BUILD, name = Reference.MOD_NAME, acceptableRemoteVersions = "*")
 public class DefaultWorldGenerator {
 	public static Configuration configuration;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		configuration = ConfigurationFile.init(event
-				.getSuggestedConfigurationFile());
+		configuration = ConfigurationFile.init(event.getSuggestedConfigurationFile());
 	}
 
 	@EventHandler
@@ -41,10 +40,8 @@ public class DefaultWorldGenerator {
 		if (ConfigGeneralSettings.generalShowDebugWorldGenerators) {
 			Log.info("=======================[ World Generators ]=======================");
 			for (int i = 0; i < WorldType.worldTypes.length; i++) {
-				if (WorldType.worldTypes[i] != null
-						&& WorldType.worldTypes[i].getCanBeCreated()) {
-					Log.info("Name: "
-							+ WorldType.worldTypes[i].getWorldTypeName());
+				if (WorldType.worldTypes[i] != null && WorldType.worldTypes[i].getCanBeCreated()) {
+					Log.info("Name: " + WorldType.worldTypes[i].getWorldTypeName());
 				}
 			}
 			Log.info("==================================================================");

@@ -1,14 +1,25 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+
+#vim
 *~
-/eclipse/*
-/.gradle/*
-/.classpath
-/.project
-/.settings
-/bin/*
-/run/*
-/build/*
-ezwasteland_Client.launch
-ezwasteland_Server.launch
-/test/*
-DefaultWorldGenerator-port_Client.launch
-DefaultWorldGenerator-port_Server.launch
