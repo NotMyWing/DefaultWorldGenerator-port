@@ -38,7 +38,7 @@ public class ConfigGui extends GuiConfig {
 
 		prop = ConfigurationHelper.getProp(configuration, "Seed", "general");
 		lst.add(new ConfigElement(prop));
-		
+
 		prop = ConfigurationHelper.getProp(configuration, "World Generator", "general");
 		prop.setConfigEntryClass(WorldTypeEntries.class);
 		lst.add(new ConfigElement(prop));
@@ -50,7 +50,7 @@ public class ConfigGui extends GuiConfig {
 		prop = ConfigurationHelper.getProp(configuration, "Lock Worldtype", "general");
 		lst.add(new ConfigElement(prop));
 
-		return lst;	
+		return lst;
 	}
 
 	/** class to list the world types **/
