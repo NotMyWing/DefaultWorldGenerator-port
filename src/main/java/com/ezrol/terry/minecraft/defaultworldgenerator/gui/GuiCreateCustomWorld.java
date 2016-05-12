@@ -33,6 +33,9 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 			}
 			guiReflectHelper.selectedIndex.setInt(this, WorldGenerator);
 
+			if (!ConfigGeneralSettings.generalSeed.equals("")) {
+				guiReflectHelper.worldSeed.set(this, ConfigGeneralSettings.generalSeed);
+			}
 		} catch (Exception ex) {
 			Log.fatal("Fatal Error:");
 			Log.fatal(ex);
@@ -102,7 +105,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 
 			if (((GuiButton) guiReflectHelper.btnMapFeatures.get(this)).visible) {
 				this.drawString(this.fontRendererObj, I18n.format("selectWorld.mapFeatures.info", new Object[0]),
-						this.width / 2 - 75, 122, -6250336);
+						this.width / 2 - 73, 122, -6250336);
 			}
 
 			if (((GuiButton) guiReflectHelper.btnAllowCommands.get(this)).visible) {

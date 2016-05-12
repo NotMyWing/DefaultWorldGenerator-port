@@ -55,4 +55,8 @@ public class ConfigurationHelper {
 		property.setComment(comment);
 		return property.getIntList();
 	}
+
+	public static Property getProp(Configuration configuration, String name, String category) {
+		return configuration.getCategory(category).get(name);
+	}
 }

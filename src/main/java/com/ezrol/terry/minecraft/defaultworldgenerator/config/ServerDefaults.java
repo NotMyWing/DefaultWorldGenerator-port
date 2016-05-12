@@ -18,6 +18,7 @@ public class ServerDefaults {
 				DedicatedServer server = (DedicatedServer) s;
 				server.getStringProperty("level-type", ConfigGeneralSettings.generalWorldGenerator);
 				server.getStringProperty("generator-settings", ConfigGeneralSettings.customizationJson);
+				server.getStringProperty("level-seed", ConfigGeneralSettings.generalSeed);
 			}
 		} catch (Exception ex) {
 			Log.fatal("Unable to set dedicated server properties: ");

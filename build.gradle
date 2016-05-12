@@ -25,7 +25,7 @@ group= "com.ezrol.terry.minecraft.defaultworldgenerator"
 archivesBaseName = "DefaultWorldGenerator-port"
 
 minecraft {
-    version = "1.9-12.16.0.1811-1.9"
+    version = "1.9-12.16.1.1887"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.

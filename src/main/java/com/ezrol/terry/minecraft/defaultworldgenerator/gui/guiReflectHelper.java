@@ -15,6 +15,7 @@ public class guiReflectHelper {
 	public static Field btnAllowCommands;
 	public static Field worldSeedField;
 	public static Field inMoreWorldOptionsDisplay;
+	public static Field worldSeed;
 
 	public static Method updateDisplayState;
 
@@ -40,6 +41,7 @@ public class guiReflectHelper {
 				btnAllowCommands = GuiCreateWorld.class.getDeclaredField("btnAllowCommands");
 				worldSeedField = GuiCreateWorld.class.getDeclaredField("worldSeedField");
 				inMoreWorldOptionsDisplay = GuiCreateWorld.class.getDeclaredField("inMoreWorldOptionsDisplay");
+				worldSeed = GuiCreateWorld.class.getDeclaredField("worldSeed");
 
 				updateDisplayState = GuiCreateWorld.class.getDeclaredMethod("updateDisplayState");
 			} else {
@@ -50,6 +52,7 @@ public class guiReflectHelper {
 				btnAllowCommands = GuiCreateWorld.class.getDeclaredField("field_146321_E");
 				worldSeedField = GuiCreateWorld.class.getDeclaredField("field_146335_h");
 				inMoreWorldOptionsDisplay = GuiCreateWorld.class.getDeclaredField("field_146344_y");
+				worldSeed = GuiCreateWorld.class.getDeclaredField("field_146329_I");
 
 				updateDisplayState = GuiCreateWorld.class.getDeclaredMethod("func_146319_h");
 			}
@@ -59,6 +62,7 @@ public class guiReflectHelper {
 			btnMapFeatures.setAccessible(true);
 			btnAllowCommands.setAccessible(true);
 			worldSeedField.setAccessible(true);
+			worldSeed.setAccessible(true);
 			inMoreWorldOptionsDisplay.setAccessible(true);
 
 			updateDisplayState.setAccessible(true);
