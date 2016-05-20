@@ -65,11 +65,11 @@ public class ConfigGui extends GuiConfig {
 		private static Map<Object, String> getTypeMap() {
 			Map m = new ConcurrentSkipListMap<Object, String>();
 			String s;
-			for (int i = 0; i < WorldType.worldTypes.length; i++) {
-				if (WorldType.worldTypes[i] != null && WorldType.worldTypes[i].getCanBeCreated()) {
+			for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
+				if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].getCanBeCreated()) {
 					s = I18n.format("selectWorld.mapType", new Object[0]) + " "
-							+ I18n.format(WorldType.worldTypes[i].getTranslateName(), new Object[0]);
-					m.put(WorldType.worldTypes[i].getWorldTypeName(), s);
+							+ I18n.format(WorldType.WORLD_TYPES[i].getTranslateName(), new Object[0]);
+					m.put(WorldType.WORLD_TYPES[i].getWorldTypeName(), s);
 				}
 			}
 			return (m);
@@ -108,10 +108,10 @@ public class ConfigGui extends GuiConfig {
 			String type = ourOwner.CurrentWorldType;
 			WorldType worldtype = null;
 
-			for (int i = 0; i < WorldType.worldTypes.length; i++) {
-				if (WorldType.worldTypes[i] != null && WorldType.worldTypes[i].getCanBeCreated()) {
-					if (WorldType.worldTypes[i].getWorldTypeName().equalsIgnoreCase(type)) {
-						worldtype = WorldType.worldTypes[i];
+			for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
+				if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].getCanBeCreated()) {
+					if (WorldType.WORLD_TYPES[i].getWorldTypeName().equalsIgnoreCase(type)) {
+						worldtype = WorldType.WORLD_TYPES[i];
 						break;
 					}
 				}

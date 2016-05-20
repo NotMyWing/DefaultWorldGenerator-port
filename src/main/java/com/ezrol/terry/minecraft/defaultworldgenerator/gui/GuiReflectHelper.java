@@ -7,7 +7,7 @@ import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 
 import net.minecraft.client.gui.GuiCreateWorld;
 
-public class guiReflectHelper {
+public class GuiReflectHelper {
 	public static Field selectedIndex;
 	public static Field btnMapType;
 	public static Field btnCustomizeType;

@@ -4,7 +4,7 @@ import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigGeneralSetti
 import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigurationFile;
 import com.ezrol.terry.minecraft.defaultworldgenerator.config.ServerDefaults;
 import com.ezrol.terry.minecraft.defaultworldgenerator.events.GuiEvents;
-import com.ezrol.terry.minecraft.defaultworldgenerator.gui.guiReflectHelper;
+import com.ezrol.terry.minecraft.defaultworldgenerator.gui.GuiReflectHelper;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Reference;
 
@@ -32,7 +32,7 @@ public class DefaultWorldGenerator {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		if (event.getSide() == Side.CLIENT) {
-			guiReflectHelper.initReflect();
+			GuiReflectHelper.initReflect();
 			MinecraftForge.EVENT_BUS.register(new GuiEvents());
 		}
 	}
@@ -41,9 +41,9 @@ public class DefaultWorldGenerator {
 	public void postInit(FMLPostInitializationEvent event) {
 		if (ConfigGeneralSettings.generalShowDebugWorldGenerators) {
 			Log.info("=======================[ World Generators ]=======================");
-			for (int i = 0; i < WorldType.worldTypes.length; i++) {
-				if (WorldType.worldTypes[i] != null && WorldType.worldTypes[i].getCanBeCreated()) {
-					Log.info("Name: " + WorldType.worldTypes[i].getWorldTypeName());
+			for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
+				if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].getCanBeCreated()) {
+					Log.info("Name: " + WorldType.WORLD_TYPES[i].getWorldTypeName());
 				}
 			}
 			Log.info("==================================================================");

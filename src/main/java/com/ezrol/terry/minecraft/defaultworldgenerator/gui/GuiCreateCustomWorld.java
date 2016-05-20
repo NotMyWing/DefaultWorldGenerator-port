@@ -22,19 +22,19 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 		try {
 			int WorldGenerator = 0;
 
-			for (int i = 0; i < WorldType.worldTypes.length; i++) {
-				if (WorldType.worldTypes[i] != null && WorldType.worldTypes[i].getCanBeCreated()) {
-					if (WorldType.worldTypes[i].getWorldTypeName()
+			for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
+				if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].getCanBeCreated()) {
+					if (WorldType.WORLD_TYPES[i].getWorldTypeName()
 							.equalsIgnoreCase(ConfigGeneralSettings.generalWorldGenerator)) {
-						WorldGenerator = WorldType.worldTypes[i].getWorldTypeID();
-						Log.info("Changed world type to " + WorldType.worldTypes[i].getTranslateName());
+						WorldGenerator = WorldType.WORLD_TYPES[i].getWorldTypeID();
+						Log.info("Changed world type to " + WorldType.WORLD_TYPES[i].getTranslateName());
 					}
 				}
 			}
-			guiReflectHelper.selectedIndex.setInt(this, WorldGenerator);
+			GuiReflectHelper.selectedIndex.setInt(this, WorldGenerator);
 
 			if (!ConfigGeneralSettings.generalSeed.equals("")) {
-				guiReflectHelper.worldSeed.set(this, ConfigGeneralSettings.generalSeed);
+				GuiReflectHelper.worldSeed.set(this, ConfigGeneralSettings.generalSeed);
 			}
 		} catch (Exception ex) {
 			Log.fatal("Fatal Error:");
@@ -45,9 +45,9 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 	private void hideWorldConfig() {
 		try {
 			if (ConfigGeneralSettings.generalLockWorldGenerator) {
-				((GuiButton) guiReflectHelper.btnMapType.get(this)).visible = false;
-				((GuiButton) guiReflectHelper.btnCustomizeType.get(this)).visible = false;
-				((GuiButton) guiReflectHelper.btnMapFeatures.get(this)).xPosition = this.width / 2 - 75;
+				((GuiButton) GuiReflectHelper.btnMapType.get(this)).visible = false;
+				((GuiButton) GuiReflectHelper.btnCustomizeType.get(this)).visible = false;
+				((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).xPosition = this.width / 2 - 75;
 			}
 		} catch (Exception ex) {
 			Log.fatal("Error Hiding Buttons:");
@@ -62,7 +62,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 
 		try {
 
-			guiReflectHelper.updateDisplayState.invoke(this);
+			GuiReflectHelper.updateDisplayState.invoke(this);
 
 		} catch (Exception ex) {
 			Log.fatal("Fatal Error:");
@@ -89,7 +89,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 			return;
 		}
 		try {
-			if (!guiReflectHelper.inMoreWorldOptionsDisplay.getBoolean(this)) {
+			if (!GuiReflectHelper.inMoreWorldOptionsDisplay.getBoolean(this)) {
 				super.drawScreen(mouseX, mouseY, partialTicks);
 				return;
 			}
@@ -103,17 +103,17 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 			this.drawString(this.fontRendererObj, I18n.format("selectWorld.seedInfo", new Object[0]),
 					this.width / 2 - 100, 85, -6250336);
 
-			if (((GuiButton) guiReflectHelper.btnMapFeatures.get(this)).visible) {
+			if (((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).visible) {
 				this.drawString(this.fontRendererObj, I18n.format("selectWorld.mapFeatures.info", new Object[0]),
 						this.width / 2 - 73, 122, -6250336);
 			}
 
-			if (((GuiButton) guiReflectHelper.btnAllowCommands.get(this)).visible) {
+			if (((GuiButton) GuiReflectHelper.btnAllowCommands.get(this)).visible) {
 				this.drawString(this.fontRendererObj, I18n.format("selectWorld.allowCommands.info", new Object[0]),
 						this.width / 2 - 150, 172, -6250336);
 			}
 
-			((GuiTextField) guiReflectHelper.worldSeedField.get(this)).drawTextBox();
+			((GuiTextField) GuiReflectHelper.worldSeedField.get(this)).drawTextBox();
 
 			for (int i = 0; i < this.buttonList.size(); ++i) {
 				((GuiButton) this.buttonList.get(i)).drawButton(this.mc, mouseX, mouseY);
