@@ -4,11 +4,11 @@
   "name": "Default World Generator",
   "description": "A small mod to automatically select the default world generator for both single player and servers",
   "version": "${version}",
-  "mcversion": "1.9.4",
+  "mcversion": "1.11",
   "url": "http://minecraft.curseforge.com/projects/default-world-generator-port",
   "updateUrl": "",
   "authorList": ["EzTerry", "FireBall1725"],
-  "credits": "EzTerry - 1.8.9/1.9 porter
+  "credits": "EzTerry - 1.8.9+ porter
 FireBall1725 (original author), Special thanks to amadornes for reflection help
 
 The MIT License Copyright

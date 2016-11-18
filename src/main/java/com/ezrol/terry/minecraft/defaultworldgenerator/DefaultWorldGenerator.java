@@ -7,7 +7,6 @@ import com.ezrol.terry.minecraft.defaultworldgenerator.events.GuiEvents;
 import com.ezrol.terry.minecraft.defaultworldgenerator.gui.GuiReflectHelper;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Reference;
-
 import net.minecraft.world.WorldType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -20,53 +19,54 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
+@SuppressWarnings("unused,WeakerAccess")
 @Mod(modid = Reference.MOD_ID, version = Reference.VERSION_BUILD, name = Reference.MOD_NAME, guiFactory = "com.ezrol.terry.minecraft.defaultworldgenerator.gui.GuiFactory", acceptableRemoteVersions = "*")
 public class DefaultWorldGenerator {
-	public static Configuration configuration = null;
+    public static Configuration configuration = null;
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		configuration = ConfigurationFile.init(event.getSuggestedConfigurationFile());
-	}
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        configuration = ConfigurationFile.init(event.getSuggestedConfigurationFile());
+    }
 
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		if (event.getSide() == Side.CLIENT) {
-			GuiReflectHelper.initReflect();
-			MinecraftForge.EVENT_BUS.register(new GuiEvents());
-		}
-	}
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+        if (event.getSide() == Side.CLIENT) {
+            GuiReflectHelper.initReflect();
+            MinecraftForge.EVENT_BUS.register(new GuiEvents());
+        }
+    }
 
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		if (ConfigGeneralSettings.generalShowDebugWorldGenerators) {
-			Log.info("=======================[ World Generators ]=======================");
-			for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
-				if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].getCanBeCreated()) {
-					Log.info("Name: " + WorldType.WORLD_TYPES[i].getWorldTypeName());
-				}
-			}
-			Log.info("==================================================================");
-			Log.info("** In some cases world generators may not be listed");
-			Log.info("   if the one you are looking for is missing check the");
-			Log.info("   in client configuration gui");
-			Log.info("==================================================================");
-		}
-		if (event.getSide() == Side.SERVER) {
-			Log.info("Injecting Server Defaults");
-			ServerDefaults.SetDefaults();
-		}
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
+        if (ConfigGeneralSettings.generalShowDebugWorldGenerators) {
+            Log.info("=======================[ World Generators ]=======================");
+            for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
+                if (WorldType.WORLD_TYPES[i] != null) {
+                    Log.info("Name: " + WorldType.WORLD_TYPES[i].getName());
+                }
+            }
+            Log.info("==================================================================");
+            Log.info("** In some cases world generators may not be listed");
+            Log.info("   if the one you are looking for is missing check the");
+            Log.info("   in client configuration gui");
+            Log.info("==================================================================");
+        }
+        if (event.getSide() == Side.SERVER) {
+            Log.info("Injecting Server Defaults");
+            ServerDefaults.SetDefaults();
+        }
 
-		MinecraftForge.EVENT_BUS.register(this);
-	}
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
-	@SubscribeEvent
-	public void onConfigChanged(OnConfigChangedEvent event) {
-		String eventModId = event.getModID();
+    @SubscribeEvent
+    public void onConfigChanged(OnConfigChangedEvent event) {
+        String eventModId = event.getModID();
 
-		if (eventModId.equals(Reference.MOD_ID) && configuration != null) {
-			Log.info("Updating config: " + Reference.MOD_ID);
-			ConfigurationFile.loadConfiguration();
-		}
-	}
+        if (eventModId.equals(Reference.MOD_ID) && configuration != null) {
+            Log.info("Updating config: " + Reference.MOD_ID);
+            ConfigurationFile.loadConfiguration();
+        }
+    }
 }
