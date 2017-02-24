@@ -4,7 +4,7 @@
   "name": "Default World Generator",
   "description": "A small mod to automatically select the default world generator for both single player and servers",
   "version": "${version}",
-  "mcversion": "1.11",
+  "mcversion": "${mcversion}",
   "url": "http://minecraft.curseforge.com/projects/default-world-generator-port",
   "updateUrl": "",
   "authorList": ["EzTerry", "FireBall1725"],

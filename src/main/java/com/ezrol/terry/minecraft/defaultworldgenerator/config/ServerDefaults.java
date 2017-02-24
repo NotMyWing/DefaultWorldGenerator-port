@@ -15,9 +15,9 @@ public class ServerDefaults {
             MinecraftServer s = FMLServerHandler.instance().getServer();
             if (s.isDedicatedServer()) {
                 DedicatedServer server = (DedicatedServer) s;
-                server.getStringProperty("level-type", ConfigGeneralSettings.generalWorldGenerator);
-                server.getStringProperty("generator-settings", ConfigGeneralSettings.customizationJson);
-                server.getStringProperty("level-seed", ConfigGeneralSettings.generalSeed);
+                server.getStringProperty("level-type", ConfigGeneralSettings.cfgWorldGenerator);
+                server.getStringProperty("generator-settings", ConfigGeneralSettings.cfgCustomizationJson);
+                server.getStringProperty("level-seed", ConfigGeneralSettings.cfgSeed);
             }
         } catch (Exception ex) {
             Log.fatal("Unable to set dedicated server properties: ");

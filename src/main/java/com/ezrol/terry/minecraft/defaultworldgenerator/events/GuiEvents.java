@@ -28,7 +28,7 @@ public class GuiEvents {
         if (gui instanceof GuiCreateWorld) {
             GuiButton b = event.getButton();
             if (b.id == 5) {
-                if (ConfigGeneralSettings.generalLockWorldGenerator) {
+                if (ConfigGeneralSettings.cfgLockWorldGenerator) {
                     b.playPressSound(Minecraft.getMinecraft().getSoundHandler());
                     event.setCanceled(true);
                 }

@@ -12,7 +12,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
     public GuiCreateCustomWorld(GuiScreen screen) {
         super(screen);
         // set the customization here so a user can change it
-        this.chunkProviderSettingsJson = ConfigGeneralSettings.customizationJson;
+        this.chunkProviderSettingsJson = ConfigGeneralSettings.cfgCustomizationJson;
 
         try {
             int WorldGenerator = 0;
@@ -20,7 +20,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
             for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
                 if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].canBeCreated()) {
                     if (WorldType.WORLD_TYPES[i].getName()
-                            .equalsIgnoreCase(ConfigGeneralSettings.generalWorldGenerator)) {
+                            .equalsIgnoreCase(ConfigGeneralSettings.cfgWorldGenerator)) {
                         WorldGenerator = WorldType.WORLD_TYPES[i].getWorldTypeID();
                         Log.info("Changed world type to " + WorldType.WORLD_TYPES[i].getTranslateName());
                     }
@@ -28,8 +28,8 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
             }
             GuiReflectHelper.selectedIndex.setInt(this, WorldGenerator);
 
-            if (!ConfigGeneralSettings.generalSeed.equals("")) {
-                GuiReflectHelper.worldSeed.set(this, ConfigGeneralSettings.generalSeed);
+            if (!ConfigGeneralSettings.cfgSeed.equals("")) {
+                GuiReflectHelper.worldSeed.set(this, ConfigGeneralSettings.cfgSeed);
             }
         } catch (Exception ex) {
             Log.fatal("Fatal Error:");
@@ -39,7 +39,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 
     private void hideWorldConfig() {
         try {
-            if (ConfigGeneralSettings.generalLockWorldGenerator) {
+            if (ConfigGeneralSettings.cfgLockWorldGenerator) {
                 ((GuiButton) GuiReflectHelper.btnMapType.get(this)).visible = false;
                 ((GuiButton) GuiReflectHelper.btnCustomizeType.get(this)).visible = false;
                 ((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).xPosition = this.width / 2 - 75;
@@ -79,7 +79,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
      */
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (!ConfigGeneralSettings.generalLockWorldGenerator) {
+        if (!ConfigGeneralSettings.cfgLockWorldGenerator) {
             super.drawScreen(mouseX, mouseY, partialTicks);
             return;
         }

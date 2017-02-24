@@ -39,19 +39,6 @@ public class DefaultWorldGenerator {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        if (ConfigGeneralSettings.generalShowDebugWorldGenerators) {
-            Log.info("=======================[ World Generators ]=======================");
-            for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
-                if (WorldType.WORLD_TYPES[i] != null) {
-                    Log.info("Name: " + WorldType.WORLD_TYPES[i].getName());
-                }
-            }
-            Log.info("==================================================================");
-            Log.info("** In some cases world generators may not be listed");
-            Log.info("   if the one you are looking for is missing check the");
-            Log.info("   in client configuration gui");
-            Log.info("==================================================================");
-        }
         if (event.getSide() == Side.SERVER) {
             Log.info("Injecting Server Defaults");
             ServerDefaults.SetDefaults();

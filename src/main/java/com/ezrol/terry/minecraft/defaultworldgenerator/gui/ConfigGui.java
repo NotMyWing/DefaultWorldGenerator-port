@@ -31,7 +31,7 @@ public class ConfigGui extends GuiConfig {
 
     public ConfigGui(GuiScreen parent) {
         super(parent, initList(), Reference.MOD_ID, true, false, I18n.format(Reference.MOD_ID + ".config.gui.title"));
-        CurrentWorldType = ConfigGeneralSettings.generalWorldGenerator;
+        CurrentWorldType = ConfigGeneralSettings.cfgWorldGenerator;
     }
 
     public static List<IConfigElement> initList() {
