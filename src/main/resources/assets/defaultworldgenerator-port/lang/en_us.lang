@@ -1,0 +1,5 @@
+defaultworldgenerator-port.config.gui.title=Default World Generator Configuration
+defaultworldgenerator-port.config.gui.bc_disable=0 - Bonus Chest Disabled
+defaultworldgenerator-port.config.gui.bc_enabled=1 - Bonus Chest Enabled
+defaultworldgenerator-port.config.gui.bc_blocked=2 - Bonus Chest Blocked
+defaultworldgenerator-port.config.gui.bc_forced=3 - Bonus Chest Forced

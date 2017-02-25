@@ -5,4 +5,6 @@ public class ConfigGeneralSettings {
     public static String cfgSeed;
     public static boolean cfgLockWorldGenerator;
     public static String cfgCustomizationJson;
+    public static int cfgBonusChestState;
+    public static boolean cfgCopyDefaultWorldData;
 }

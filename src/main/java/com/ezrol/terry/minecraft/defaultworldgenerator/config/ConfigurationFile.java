@@ -28,6 +28,10 @@ public class ConfigurationFile {
                 "general", "", "The world customization string (JSON, or super flat string)", true);
         ConfigGeneralSettings.cfgLockWorldGenerator = ConfigurationHelper.getBoolean(configuration,
                 "Lock Worldtype", "general", false, "Prevent the user from changing the world type.");
+        ConfigGeneralSettings.cfgBonusChestState = ConfigurationHelper.getInt(configuration,"Bonus Chest State","general",1,
+                "State of the Bonus Chest Button 0=disabled+shown, 1=enabled+shown, 2=disable+hidden, 3=enable+hidden");
+        ConfigGeneralSettings.cfgCopyDefaultWorldData = ConfigurationHelper.getBoolean(configuration,
+                "Copy DefaultWorldData","general",true,"Copy the DefaultWorldData directory into the new world data directory");
 
         if (configuration.hasChanged()) {
             configuration.save();

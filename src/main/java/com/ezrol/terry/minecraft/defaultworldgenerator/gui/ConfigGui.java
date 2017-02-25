@@ -53,7 +53,44 @@ public class ConfigGui extends GuiConfig {
         prop = ConfigurationHelper.getProp(configuration, "Lock Worldtype", "general");
         lst.add(new ConfigElement(prop));
 
+        prop = ConfigurationHelper.getProp(configuration, "Bonus Chest State", "general");
+        prop.setConfigEntryClass(BonusChestState.class);
+        lst.add(new ConfigElement(prop));
+
+        prop = ConfigurationHelper.getProp(configuration, "Copy DefaultWorldData", "general");
+        lst.add(new ConfigElement(prop));
+
         return lst;
+    }
+
+    public static class BonusChestState extends GuiConfigEntries.SelectValueEntry {
+        public BonusChestState(GuiConfig owningScreen, GuiConfigEntries owningEntryList,
+                                IConfigElement configElement) {
+
+            super(owningScreen, owningEntryList, configElement, getTypeMap());
+        }
+
+        /**
+         * Get the list of world types to choose between
+         **/
+        private static Map<Object, String> getTypeMap() {
+            Map m = new ConcurrentSkipListMap<Integer, String>();
+
+            m.put(0,I18n.format("defaultworldgenerator-port.config.gui.bc_disable"));
+            m.put(1,I18n.format("defaultworldgenerator-port.config.gui.bc_enabled"));
+            m.put(2,I18n.format("defaultworldgenerator-port.config.gui.bc_blocked"));
+            m.put(3,I18n.format("defaultworldgenerator-port.config.gui.bc_forced"));
+
+            return (m);
+        }
+
+        @Override
+        public void updateValueButtonText() {
+            super.updateValueButtonText();
+            if (this.owningScreen instanceof ConfigGui) {
+                ((ConfigGui) this.owningScreen).CurrentWorldType = this.currentValue.toString();
+            }
+        }
     }
 
     /**

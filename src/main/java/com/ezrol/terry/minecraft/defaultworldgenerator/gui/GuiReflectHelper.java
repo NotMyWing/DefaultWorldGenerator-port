@@ -16,6 +16,8 @@ public class GuiReflectHelper {
     public static Field worldSeedField;
     public static Field inMoreWorldOptionsDisplay;
     public static Field worldSeed;
+    public static Field bonusChestEnabled;
+    public static Field btnBonusItems;
 
     public static Method updateDisplayState;
 
@@ -42,6 +44,8 @@ public class GuiReflectHelper {
                 worldSeedField = GuiCreateWorld.class.getDeclaredField("worldSeedField");
                 inMoreWorldOptionsDisplay = GuiCreateWorld.class.getDeclaredField("inMoreWorldOptionsDisplay");
                 worldSeed = GuiCreateWorld.class.getDeclaredField("worldSeed");
+                bonusChestEnabled = GuiCreateWorld.class.getDeclaredField("bonusChestEnabled");
+                btnBonusItems = GuiCreateWorld.class.getDeclaredField("btnBonusItems");
 
                 updateDisplayState = GuiCreateWorld.class.getDeclaredMethod("updateDisplayState");
             } else {
@@ -53,6 +57,8 @@ public class GuiReflectHelper {
                 worldSeedField = GuiCreateWorld.class.getDeclaredField("field_146335_h");
                 inMoreWorldOptionsDisplay = GuiCreateWorld.class.getDeclaredField("field_146344_y");
                 worldSeed = GuiCreateWorld.class.getDeclaredField("field_146329_I");
+                bonusChestEnabled = GuiCreateWorld.class.getDeclaredField("field_146338_v");
+                btnBonusItems = GuiCreateWorld.class.getDeclaredField("field_146326_C");
 
                 updateDisplayState = GuiCreateWorld.class.getDeclaredMethod("func_146319_h");
             }
@@ -64,6 +70,8 @@ public class GuiReflectHelper {
             worldSeedField.setAccessible(true);
             worldSeed.setAccessible(true);
             inMoreWorldOptionsDisplay.setAccessible(true);
+            bonusChestEnabled.setAccessible(true);
+            btnBonusItems.setAccessible(true);
 
             updateDisplayState.setAccessible(true);
         } catch (Exception ex) {

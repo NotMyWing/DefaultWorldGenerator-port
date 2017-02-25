@@ -31,6 +31,9 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
             if (!ConfigGeneralSettings.cfgSeed.equals("")) {
                 GuiReflectHelper.worldSeed.set(this, ConfigGeneralSettings.cfgSeed);
             }
+            if (ConfigGeneralSettings.cfgBonusChestState == 1 || ConfigGeneralSettings.cfgBonusChestState == 3) {
+                GuiReflectHelper.bonusChestEnabled.setBoolean(this,true);
+            }
         } catch (Exception ex) {
             Log.fatal("Fatal Error:");
             Log.fatal(ex);
@@ -43,6 +46,9 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
                 ((GuiButton) GuiReflectHelper.btnMapType.get(this)).visible = false;
                 ((GuiButton) GuiReflectHelper.btnCustomizeType.get(this)).visible = false;
                 ((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).xPosition = this.width / 2 - 75;
+            }
+            if (ConfigGeneralSettings.cfgBonusChestState == 2 || ConfigGeneralSettings.cfgBonusChestState == 3) {
+                ((GuiButton) GuiReflectHelper.btnBonusItems.get(this)).enabled = false;
             }
         } catch (Exception ex) {
             Log.fatal("Error Hiding Buttons:");
