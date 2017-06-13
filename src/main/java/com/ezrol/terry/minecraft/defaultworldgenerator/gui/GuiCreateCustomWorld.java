@@ -16,7 +16,6 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 
         try {
             int WorldGenerator = 0;
-
             for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
                 if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].canBeCreated()) {
                     if (WorldType.WORLD_TYPES[i].getName()
@@ -96,32 +95,32 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
             }
             // We really need to update the draw
             this.drawDefaultBackground();
-            this.drawCenteredString(this.fontRendererObj, I18n.format("selectWorld.create"),
+            this.drawCenteredString(this.fontRenderer, I18n.format("selectWorld.create"),
                     this.width / 2, 20, -1);
 
-            this.drawString(this.fontRendererObj, I18n.format("selectWorld.enterSeed"),
+            this.drawString(this.fontRenderer, I18n.format("selectWorld.enterSeed"),
                     this.width / 2 - 100, 47, -6250336);
-            this.drawString(this.fontRendererObj, I18n.format("selectWorld.seedInfo"),
+            this.drawString(this.fontRenderer, I18n.format("selectWorld.seedInfo"),
                     this.width / 2 - 100, 85, -6250336);
 
             if (((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).visible) {
-                this.drawString(this.fontRendererObj, I18n.format("selectWorld.mapFeatures.info"),
+                this.drawString(this.fontRenderer, I18n.format("selectWorld.mapFeatures.info"),
                         this.width / 2 - 70, 122, -6250336);
             }
 
             if (((GuiButton) GuiReflectHelper.btnAllowCommands.get(this)).visible) {
-                this.drawString(this.fontRendererObj, I18n.format("selectWorld.allowCommands.info"),
+                this.drawString(this.fontRenderer, I18n.format("selectWorld.allowCommands.info"),
                         this.width / 2 - 150, 172, -6250336);
             }
 
             ((GuiTextField) GuiReflectHelper.worldSeedField.get(this)).drawTextBox();
 
             for (GuiButton aButtonList : this.buttonList) {
-                aButtonList.drawButton(this.mc, mouseX, mouseY);
+                (aButtonList).func_191745_a(this.mc, mouseX, mouseY, partialTicks);
             }
 
             for (GuiLabel aLabelList : this.labelList) {
-                aLabelList.drawLabel(this.mc, mouseX, mouseY);
+                (aLabelList).drawLabel(this.mc, mouseX, mouseY);
             }
         } catch (Exception ex) {
             Log.fatal("Fatal Error Drawing Screen:");

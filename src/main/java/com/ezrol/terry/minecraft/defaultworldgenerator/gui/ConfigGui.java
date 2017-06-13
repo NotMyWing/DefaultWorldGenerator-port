@@ -35,7 +35,7 @@ public class ConfigGui extends GuiConfig {
     }
 
     public static List<IConfigElement> initList() {
-        List<IConfigElement> lst = new ArrayList<IConfigElement>();
+        List<IConfigElement> lst = new ArrayList<>();
         Configuration configuration = ConfigurationFile.configuration;
         Property prop;
 
@@ -166,7 +166,7 @@ public class ConfigGui extends GuiConfig {
                 }
             }
 
-            if (worldtype == null || worldtype.isCustomizable()) {
+            if (worldtype != null && worldtype.isCustomizable()) {
                 GuiFakeNewWorld fakegui = new GuiFakeNewWorld(ourOwner, this);
 
                 fakegui.chunkProviderSettingsJson = currentValue.toString();
