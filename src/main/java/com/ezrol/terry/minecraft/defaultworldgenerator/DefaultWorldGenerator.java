@@ -27,7 +27,8 @@ import java.io.IOException;
         guiFactory = "com.ezrol.terry.minecraft.defaultworldgenerator.gui.GuiFactory",
         acceptableRemoteVersions = "*")
 public class DefaultWorldGenerator {
-    public static Configuration configuration = null;
+    public static ConfigurationFile modConfig;
+    public static File modSettingsDir;
 
     @SidedProxy(clientSide = "com.ezrol.terry.minecraft.defaultworldgenerator.ClientProxy",
             serverSide = "com.ezrol.terry.minecraft.defaultworldgenerator.ServerProxy")
@@ -35,7 +36,8 @@ public class DefaultWorldGenerator {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        configuration = ConfigurationFile.init(event.getSuggestedConfigurationFile());
+        modSettingsDir = new File(event.getModConfigurationDirectory(),Reference.MOD_ID);
+        modConfig = new ConfigurationFile(new File(modSettingsDir,"worldsettings.data"));
     }
 
     @EventHandler

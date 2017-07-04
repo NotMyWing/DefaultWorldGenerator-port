@@ -22,12 +22,12 @@ public class GuiEvents {
         GuiScreen gui = event.getGui();
         if (gui instanceof GuiWorldSelection) {
             GuiButton b = event.getButton();
-            if (b.id == 3) {
+            /*if (b.id == 3) {
                 GuiCreateCustomWorld guiCreateWorld = new GuiCreateCustomWorld(Minecraft.getMinecraft().currentScreen);
                 gui.mc.displayGuiScreen(guiCreateWorld);
                 b.playPressSound(Minecraft.getMinecraft().getSoundHandler());
                 event.setCanceled(true);
-            }
+            }*/
         }
 
         if (gui instanceof GuiCreateWorld) {
@@ -48,15 +48,5 @@ public class GuiEvents {
         }
 
         // Log.error(event.button.id + " - " + event.gui.toString());
-    }
-
-    @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        String eventModId = event.getModID();
-
-        if (eventModId.equals(Reference.MOD_ID) && DefaultWorldGenerator.configuration != null) {
-            Log.info("Updating config: " + Reference.MOD_ID);
-            ConfigurationFile.loadConfiguration();
-        }
     }
 }

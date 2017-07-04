@@ -20,8 +20,8 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
                 if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].canBeCreated()) {
                     if (WorldType.WORLD_TYPES[i].getName()
                             .equalsIgnoreCase(ConfigGeneralSettings.cfgWorldGenerator)) {
-                        WorldGenerator = WorldType.WORLD_TYPES[i].getWorldTypeID();
-                        Log.info("Changed world type to " + WorldType.WORLD_TYPES[i].getTranslateName());
+                        WorldGenerator = WorldType.WORLD_TYPES[i].getId();
+                        Log.info("Changed world type to " + WorldType.WORLD_TYPES[i].getName());
                     }
                 }
             }
@@ -44,7 +44,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
             if (ConfigGeneralSettings.cfgLockWorldGenerator) {
                 ((GuiButton) GuiReflectHelper.btnMapType.get(this)).visible = false;
                 ((GuiButton) GuiReflectHelper.btnCustomizeType.get(this)).visible = false;
-                ((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).xPosition = this.width / 2 - 75;
+                ((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).x = this.width / 2 - 75;
             }
             if (ConfigGeneralSettings.cfgBonusChestState == 2 || ConfigGeneralSettings.cfgBonusChestState == 3) {
                 ((GuiButton) GuiReflectHelper.btnBonusItems.get(this)).enabled = false;
@@ -116,7 +116,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
             ((GuiTextField) GuiReflectHelper.worldSeedField.get(this)).drawTextBox();
 
             for (GuiButton aButtonList : this.buttonList) {
-                (aButtonList).func_191745_a(this.mc, mouseX, mouseY, partialTicks);
+                (aButtonList).drawButton(this.mc, mouseX, mouseY, partialTicks);
             }
 
             for (GuiLabel aLabelList : this.labelList) {

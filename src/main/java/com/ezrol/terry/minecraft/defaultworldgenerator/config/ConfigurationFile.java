@@ -1,40 +1,78 @@
 package com.ezrol.terry.minecraft.defaultworldgenerator.config;
 
-import com.ezrol.terry.minecraft.defaultworldgenerator.helper.ConfigurationHelper;
-import net.minecraftforge.common.config.Configuration;
+import com.ezrol.terry.lib.huffstruct.Huffstruct;
+import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class ConfigurationFile {
-    public static Configuration configuration;
+    private byte[] currentData;
+    private File location;
+    SettingsRoot settings;
 
-    public static Configuration init(File configFile) {
-        if (configuration == null) {
-            configuration = new Configuration(configFile);
-            loadConfiguration();
-        }
-        return configuration;
+    public ConfigurationFile(File loc){
+        location=loc;
+        settings=null;
     }
 
-    public static void loadConfiguration() {
-        ConfigGeneralSettings.cfgWorldGenerator = ConfigurationHelper.getString(configuration, "World Generator",
-                "general", "default", "The world generator to select by default", true);
-        ConfigGeneralSettings.cfgSeed = ConfigurationHelper.getString(configuration, "Seed",
-                "general", "", "The Suggested Seed for the pack, leave blank for a random seed, note" +
-                        "the player can change this even if locked", true);
-        ConfigGeneralSettings.cfgWorldGenerator = ConfigurationHelper.getString(configuration, "World Generator",
-                "general", "default", "The world generator to select by default", true);
-        ConfigGeneralSettings.cfgCustomizationJson = ConfigurationHelper.getString(configuration, "CustomizationJson",
-                "general", "", "The world customization string (JSON, or super flat string)", true);
-        ConfigGeneralSettings.cfgLockWorldGenerator = ConfigurationHelper.getBoolean(configuration,
-                "Lock Worldtype", "general", false, "Prevent the user from changing the world type.");
-        ConfigGeneralSettings.cfgBonusChestState = ConfigurationHelper.getInt(configuration,"Bonus Chest State","general",0,
-                "State of the Bonus Chest Button 0=disabled+shown, 1=enabled+shown, 2=disable+hidden, 3=enable+hidden");
-        ConfigGeneralSettings.cfgCopyDefaultWorldData = ConfigurationHelper.getBoolean(configuration,
-                "Copy DefaultWorldData","general",true,"Copy the DefaultWorldData directory into the new world data directory");
+    /**
+     * Restore settings to the data last in the file
+     */
+    public void restoreSettings(){
+        if(currentData == null) {
+            settings = new SettingsRoot(null);
+        }
+        else{
+            try{
+                settings = new SettingsRoot(Huffstruct.loadData(currentData));
+            } catch(Exception e){
+                Log.error("Error parsing config: " + e);
+                Log.info("using internal configuration");
+                settings = new SettingsRoot(null);
+            }
+        }
+    }
 
-        if (configuration.hasChanged()) {
-            configuration.save();
+    /**
+     * Read (or reread) the settings file from disk
+     */
+    public void readFromDisk(){
+        currentData = null;
+        try {
+            if(location != null && location.exists()) {
+                currentData = Files.readAllBytes(location.toPath());
+            } else {
+                Log.info("Config file not found, using internal defaults (" + location.toString() + ")");
+            }
+        } catch (IOException e) {
+            Log.error("Unable to read file: " + location.toString());
+            Log.error("Assuming config file is blank");
+        }
+        restoreSettings();
+    }
+
+    /**
+     * Get the current Settings structure
+     */
+    public SettingsRoot getSettings(){
+        return settings;
+    }
+
+    public void writeToDisk(){
+        byte[] tmp;
+
+        if(settings == null){
+            Log.error("Settings not generated yet");
+        }
+        tmp= Huffstruct.dumpData(settings);
+        try {
+            Files.write(location.toPath(),tmp);
+            currentData=tmp;
+            restoreSettings();
+        } catch (IOException e) {
+            Log.error("Unable to save configuration: " + e);
         }
     }
 }
