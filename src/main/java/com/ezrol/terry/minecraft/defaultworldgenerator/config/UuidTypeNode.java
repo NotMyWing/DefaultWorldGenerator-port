@@ -41,6 +41,8 @@ public class UuidTypeNode extends StructNode {
         return(new UUID(high,low));
     }
 
+
+
     @Override
     public List<StructNode> getArray() {
         return null;
@@ -61,5 +63,12 @@ public class UuidTypeNode extends StructNode {
 
     public void setValue(UUID value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "UuidTypeNode{" +
+                "value=" + value +
+                '}';
     }
 }

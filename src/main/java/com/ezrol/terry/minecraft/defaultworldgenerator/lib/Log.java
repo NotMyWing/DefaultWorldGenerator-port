@@ -3,7 +3,7 @@ package com.ezrol.terry.minecraft.defaultworldgenerator.lib;
 import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
 
-@SuppressWarnings("unused,WeakerAccess")
+@SuppressWarnings({"unused,WeakerAccess", "SameParameterValue"})
 public class Log {
     public static void log(Level logLevel, Object object) {
         FMLLog.log(Reference.MOD_NAME, logLevel, String.valueOf(object));

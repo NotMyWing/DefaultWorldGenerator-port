@@ -1,6 +1,7 @@
 package com.ezrol.terry.lib.huffstruct;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,6 +46,13 @@ abstract public class StructNode {
         public byte[] getBinaryString() {
             return null;
         }
+
+        @Override
+        public String toString() {
+            return "ListNode{" +
+                    "nodeList=" + nodeList +
+                    '}';
+        }
     }
 
     private static class StringNode extends StructNode{
@@ -62,6 +70,13 @@ abstract public class StructNode {
         @Override
         public byte[] getBinaryString() {
             return nodeData;
+        }
+
+        @Override
+        public String toString() {
+            return "StringNode{" +
+                    "nodeData=" + Arrays.toString(nodeData) +
+                    '}';
         }
     }
 }

@@ -51,4 +51,11 @@ public class StringListTypeNode extends StructNode {
     public List<String> getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "StringListTypeNode{" +
+                "value=" + value +
+                '}';
+    }
 }

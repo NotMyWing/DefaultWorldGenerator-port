@@ -18,6 +18,7 @@ public class SettingsRoot extends StructNode {
             worlds=new ArrayList<>();
         }
         else{
+            worlds=new ArrayList<>();
             for(StructNode n : origRoot.getArray()){
                 worlds.add(new WorldTypeNode(n));
             }

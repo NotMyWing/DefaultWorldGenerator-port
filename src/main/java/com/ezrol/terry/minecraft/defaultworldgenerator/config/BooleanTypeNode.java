@@ -50,4 +50,11 @@ public class BooleanTypeNode extends StructNode {
     public void setValue(boolean value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "BooleanTypeNode{" +
+                "value=" + value +
+                '}';
+    }
 }

@@ -70,6 +70,9 @@ public class Huffstruct {
      */
     private void writeCode(int code){
         String prefix = tree.getPrefix(code);
+        if(prefix == null){
+            throw(new IndexOutOfBoundsException("Bad code provided: " + code));
+        }
         for(char c : prefix.toCharArray()){
             writeBit(c=='1');
         }
@@ -100,7 +103,7 @@ public class Huffstruct {
                 //binary string found
                 processor.writeCode(Tree.CODE_START_STRING);
                 for(byte b : data){
-                    processor.writeCode(b);
+                    processor.writeCode(b & 0x00ff);
                 }
                 processor.writeCode(Tree.CODE_END_ELEMENT);
                 continue;
@@ -213,6 +216,9 @@ public class Huffstruct {
                 throw(new IllegalStateException("Unexpected Control Code: " + Integer.toString(code)));
             }
         } while(inString || stack.size() != 1);
-        return(stack.getFirst());
+        if(stack.size() == 0){
+            throw(new IllegalStateException("Structure has no elements!"));
+        }
+        return(stack.getFirst().getArray().get(0));
     }
 }

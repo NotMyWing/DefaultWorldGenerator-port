@@ -59,4 +59,11 @@ public class QuadStateTypeNode extends StructNode {
     public void setValue(States value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "QuadStateTypeNode{" +
+                "value=" + value +
+                '}';
+    }
 }

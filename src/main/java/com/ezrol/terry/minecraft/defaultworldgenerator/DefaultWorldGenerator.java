@@ -37,7 +37,11 @@ public class DefaultWorldGenerator {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         modSettingsDir = new File(event.getModConfigurationDirectory(),Reference.MOD_ID);
+        if(!modSettingsDir.exists()){
+            modSettingsDir.mkdir();
+        }
         modConfig = new ConfigurationFile(new File(modSettingsDir,"worldsettings.data"));
+        modConfig.readFromDisk();
     }
 
     @EventHandler

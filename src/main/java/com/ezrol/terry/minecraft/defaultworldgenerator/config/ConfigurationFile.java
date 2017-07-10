@@ -1,6 +1,7 @@
 package com.ezrol.terry.minecraft.defaultworldgenerator.config;
 
 import com.ezrol.terry.lib.huffstruct.Huffstruct;
+import com.ezrol.terry.minecraft.defaultworldgenerator.DefaultWorldGenerator;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 
 import java.io.File;
@@ -17,6 +18,10 @@ public class ConfigurationFile {
         settings=null;
     }
 
+    static public boolean safeFileName(String n){
+        return(n.matches("[a-z0-9_]*"));
+    }
+
     /**
      * Restore settings to the data last in the file
      */
@@ -26,7 +31,20 @@ public class ConfigurationFile {
         }
         else{
             try{
+                //read in the settings again
                 settings = new SettingsRoot(Huffstruct.loadData(currentData));
+                //make sure any datadirs are created (if a valid name)
+                for(WorldTypeNode n : settings.getWorldList() ){
+                    for(String data : ((StringListTypeNode)n.getField(WorldTypeNode.Fields.DATA_PACKS)).getValue()){
+                        if(safeFileName(data)){
+                            File datadir = new File(DefaultWorldGenerator.modSettingsDir,data);
+                            if(!datadir.exists()){
+                                //noinspection ResultOfMethodCallIgnored
+                                datadir.mkdir();
+                            }
+                        }
+                    }
+                }
             } catch(Exception e){
                 Log.error("Error parsing config: " + e);
                 Log.info("using internal configuration");

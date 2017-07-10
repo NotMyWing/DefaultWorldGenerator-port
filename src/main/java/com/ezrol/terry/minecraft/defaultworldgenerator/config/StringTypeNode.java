@@ -42,4 +42,11 @@ public class StringTypeNode extends StructNode {
     public void setValue(String value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "StringTypeNode{" +
+                "value=" + value +
+                '}';
+    }
 }
