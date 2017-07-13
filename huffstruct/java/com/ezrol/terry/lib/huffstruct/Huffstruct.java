@@ -6,7 +6,14 @@ import java.util.List;
 /**
  * Huffman Structure Reader/Writer
  *
- * Using a static huffman tree definition in Tree.java this
+ * Using a static huffman tree definition in Tree.java this will read or write a binary structure
+ * and convert it to a tree of StructNodes
+ *
+ * To Read call:
+ * static StructNode loadData(byte[])
+ *
+ * Wo Write call:
+ * static byte[] dumpData(StructNode root)
  *
  * Created by ezterry on 7/2/17.
  */
@@ -28,7 +35,7 @@ public class Huffstruct {
     }
 
     /**
-     * when writing this adds the current byte into the byte array extending as needed
+     * when writing this adds the partial byte into the byte array extending as needed
      */
     private void flushByte(){
         if(current==null){

@@ -4,6 +4,15 @@ import java.util.HashMap;
 
 /**
  * The static huffman Tree used by Huffstruct
+ * Includes 3 special codes:
+ *  CODE_START_ARRAY - indicates the start of an array
+ *  CODE_START_STRING - indicates the end of an string
+ *  CODE_END_ELEMENT - indicates the end of the current array/string
+ *
+ * These are used as markers for the structure, otherwise valid codes are
+ * 0-255 and represent 8bit binary values
+ *
+ * Since the tree is static, a singleton implementation is used
  * 
  * Created by ezterry on 7/1/17.
  */
@@ -11,12 +20,17 @@ import java.util.HashMap;
 class Tree {
     private HashMap<String, Integer> codeTable;
     private HashMap<Integer, String> prefixTable;
-    private static Tree instance;
+    private static Tree instance = null;
 
     protected static final int CODE_START_ARRAY=500;
     protected static final int CODE_START_STRING=501;
     protected static final int CODE_END_ELEMENT=502;
 
+    /**
+     * Build the tree in ram from the known constants (This was initially auto generated)
+     * Since the tree's seed data is from english text, such will get better compression, while arbitrary
+     * 8-bit data will be larger than its source)
+     */
     private Tree() {
         codeTable = new HashMap<>();
         prefixTable = new HashMap<>();
@@ -282,11 +296,22 @@ class Tree {
         addcode("111111", 502);
     }
 
+    /**
+     * adds the code to the lookup tables
+     *
+     * @param prefix The binary bit prefix (code) in string form, '0' = an unset bit, '1' = a set bit
+     * @param code The numeric code this prefix represents, example 97='a' control codes also accepted (500,501,502)
+     */
     private void addcode(String prefix, int code) {
         prefixTable.put(code, prefix);
         codeTable.put(prefix, code);
     }
 
+    /**
+     * Get an instance of the huffstruct huffman tree, this is a static dictionary used for all huff struct files
+     *
+     * @return the static Tree instance
+     */
     protected static Tree getInstance() {
         if (instance == null) {
             instance = new Tree();
@@ -294,6 +319,12 @@ class Tree {
         return instance;
     }
 
+    /**
+     * Look up a code from the prefix
+     *
+     * @param prefix a string representing the binary prefix
+     * @return the code this prefix represents, -1 if not found
+     */
     protected int getCode(String prefix) {
         if (! codeTable.containsKey(prefix)){
             return -1;
@@ -301,6 +332,14 @@ class Tree {
         return(codeTable.get(prefix));
     }
 
+    /**
+     * get a Prefix from the code
+     * get the string represnting a prefix from a valid code
+     * 0-255, and special control codes 500,501,502
+     *
+     * @param code The code to lookup
+     * @return the bit prefix that maps to this code
+     */
     protected String getPrefix(int code){
         return(prefixTable.get(code));
     }
