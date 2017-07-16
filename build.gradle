@@ -44,6 +44,8 @@ minecraft {
 }
 
 dependencies {
+    testCompile 'org.testng:testng:6.9.4'
+
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
@@ -85,6 +87,10 @@ jar
 {
     from sourceSets.huffstruct.output
     dependsOn huffstructClasses
+}
+
+test {
+    useTestNG()
 }
 
 processResources
