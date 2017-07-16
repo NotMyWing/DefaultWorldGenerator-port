@@ -1,10 +1,10 @@
 package com.ezrol.terry.minecraft.defaultworldgenerator.config;
 
 import com.ezrol.terry.lib.huffstruct.StructNode;
-import scala.actors.threadpool.Arrays;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class StringListTypeNode extends StructNode {
     private List<String> value;
-    Charset utf8;
+    private Charset utf8;
 
     public StringListTypeNode(StructNode base, String[] def){
         utf8=Charset.forName("UTF-8");
