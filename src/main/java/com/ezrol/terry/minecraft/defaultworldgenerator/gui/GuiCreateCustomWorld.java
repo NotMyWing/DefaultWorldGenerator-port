@@ -1,25 +1,39 @@
 package com.ezrol.terry.minecraft.defaultworldgenerator.gui;
 
-import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigGeneralSettings;
+import com.ezrol.terry.minecraft.defaultworldgenerator.DefaultWorldGenerator;
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.BooleanTypeNode;
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.QuadStateTypeNode;
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.StringTypeNode;
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.WorldTypeNode;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.WorldType;
+import net.minecraft.world.storage.WorldInfo;
 
 import java.io.IOException;
 
 public class GuiCreateCustomWorld extends GuiCreateWorld {
-    public GuiCreateCustomWorld(GuiScreen screen) {
-        super(screen);
-        // set the customization here so a user can change it
-        this.chunkProviderSettingsJson = ConfigGeneralSettings.cfgCustomizationJson;
+    private WorldTypeNode presetData;
+    private boolean cfgLockWorldGenerator;
 
+    public GuiCreateCustomWorld(GuiScreen screen, WorldTypeNode type) {
+        super(screen);
+        presetData = type;
+        // set the customization here so a user can change it
+        this.chunkProviderSettingsJson = ((StringTypeNode)presetData.getField(
+                WorldTypeNode.Fields.CUSTOMIZATION_STRING)).getValue();
+
+        cfgLockWorldGenerator = ((BooleanTypeNode)presetData.getField(
+                WorldTypeNode.Fields.LOCK_WORLD_TYPE)).getValue();
         try {
             int WorldGenerator = 0;
+            String generatorName = ((StringTypeNode)presetData.getField(
+                    WorldTypeNode.Fields.WORLD_GENERATOR)).getValue();
             for (int i = 0; i < WorldType.WORLD_TYPES.length; i++) {
                 if (WorldType.WORLD_TYPES[i] != null && WorldType.WORLD_TYPES[i].canBeCreated()) {
                     if (WorldType.WORLD_TYPES[i].getName()
-                            .equalsIgnoreCase(ConfigGeneralSettings.cfgWorldGenerator)) {
+                            .equalsIgnoreCase(generatorName)) {
                         WorldGenerator = WorldType.WORLD_TYPES[i].getId();
                         Log.info("Changed world type to " + WorldType.WORLD_TYPES[i].getName());
                     }
@@ -27,11 +41,29 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
             }
             GuiReflectHelper.selectedIndex.setInt(this, WorldGenerator);
 
-            if (!ConfigGeneralSettings.cfgSeed.equals("")) {
-                GuiReflectHelper.worldSeed.set(this, ConfigGeneralSettings.cfgSeed);
+            String cfgSeed = ((StringTypeNode)presetData.getField(
+                    WorldTypeNode.Fields.SEED)).getValue();
+            if (!cfgSeed.equals("")) {
+                GuiReflectHelper.worldSeed.set(this, cfgSeed);
             }
-            if (ConfigGeneralSettings.cfgBonusChestState == 1 || ConfigGeneralSettings.cfgBonusChestState == 3) {
+            String cfgName = ((StringTypeNode)presetData.getField(
+                    WorldTypeNode.Fields.CONFIGURATION_NAME)).getValue();
+            if(!cfgName.equals("")){
+                GuiReflectHelper.worldName.set(this,I18n.format("defaultworldgenerator-port.newworld.gui.name",cfgName));
+            }
+            QuadStateTypeNode.States bonusChest = ((QuadStateTypeNode)presetData.getField(
+                    WorldTypeNode.Fields.BONUS_CHEST_STATE)).getValue();
+            if (bonusChest == QuadStateTypeNode.States.STATE_ENABLED || bonusChest == QuadStateTypeNode.States.STATE_FORCED) {
                 GuiReflectHelper.bonusChestEnabled.setBoolean(this,true);
+            } else{
+                GuiReflectHelper.bonusChestEnabled.setBoolean(this,false);
+            }
+            QuadStateTypeNode.States structures = ((QuadStateTypeNode)presetData.getField(
+                    WorldTypeNode.Fields.STRUCTURE_STATE)).getValue();
+            if (structures == QuadStateTypeNode.States.STATE_ENABLED || structures == QuadStateTypeNode.States.STATE_FORCED) {
+                GuiReflectHelper.generateStructuresEnabled.setBoolean(this,true);
+            } else{
+                GuiReflectHelper.generateStructuresEnabled.setBoolean(this,false);
             }
         } catch (Exception ex) {
             Log.fatal("Fatal Error:");
@@ -41,13 +73,25 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
 
     private void hideWorldConfig() {
         try {
-            if (ConfigGeneralSettings.cfgLockWorldGenerator) {
+            if (cfgLockWorldGenerator) {
                 ((GuiButton) GuiReflectHelper.btnMapType.get(this)).visible = false;
                 ((GuiButton) GuiReflectHelper.btnCustomizeType.get(this)).visible = false;
                 ((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).x = this.width / 2 - 75;
+                if(!((StringTypeNode)presetData.getField(
+                        WorldTypeNode.Fields.SEED)).getValue().equals("")) {
+                    //seed is set lock it
+                    ((GuiTextField) GuiReflectHelper.worldSeedField.get(this)).setEnabled(false);
+                }
             }
-            if (ConfigGeneralSettings.cfgBonusChestState == 2 || ConfigGeneralSettings.cfgBonusChestState == 3) {
+            QuadStateTypeNode.States bonusChest = ((QuadStateTypeNode)presetData.getField(
+                    WorldTypeNode.Fields.BONUS_CHEST_STATE)).getValue();
+            if (bonusChest == QuadStateTypeNode.States.STATE_BLOCKED || bonusChest == QuadStateTypeNode.States.STATE_FORCED) {
                 ((GuiButton) GuiReflectHelper.btnBonusItems.get(this)).enabled = false;
+            }
+            QuadStateTypeNode.States structures = ((QuadStateTypeNode)presetData.getField(
+                    WorldTypeNode.Fields.STRUCTURE_STATE)).getValue();
+            if (structures == QuadStateTypeNode.States.STATE_BLOCKED || structures == QuadStateTypeNode.States.STATE_FORCED) {
+                ((GuiButton) GuiReflectHelper.btnMapFeatures.get(this)).enabled = false;
             }
         } catch (Exception ex) {
             Log.fatal("Error Hiding Buttons:");
@@ -84,7 +128,7 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
      */
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (!ConfigGeneralSettings.cfgLockWorldGenerator) {
+        if (!cfgLockWorldGenerator) {
             super.drawScreen(mouseX, mouseY, partialTicks);
             return;
         }
@@ -126,5 +170,12 @@ public class GuiCreateCustomWorld extends GuiCreateWorld {
             Log.fatal("Fatal Error Drawing Screen:");
             Log.fatal(ex);
         }
+    }
+
+    /**
+     * Triggered on new world click, just copy the selected level as the preset
+     */
+    public void createNewWorldClick() {
+        DefaultWorldGenerator.selectedLevel = presetData;
     }
 }

@@ -16,7 +16,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 /* Build Version */
 
-def mod_vers_part = "1.1"
+def mod_vers_part = "2.0"
 def mc_vers_part = "1.12"
 
 
@@ -30,7 +30,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12-14.21.0.2344"
+    version = "1.12-14.21.1.2406"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -38,7 +38,7 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not allways work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20170617"
+    mappings = "snapshot_20170625"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     replace '${version}', project.version
 }
@@ -64,7 +64,6 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
 }
 
 sourceSets {
@@ -76,6 +75,16 @@ sourceSets {
             srcDirs = ['huffstruct/resources']
         }
     }
+    main {
+        compileClasspath += huffstruct.output
+        runtimeClasspath += huffstruct.output
+    }
+}
+
+jar
+{
+    from sourceSets.huffstruct.output
+    dependsOn huffstructClasses
 }
 
 processResources

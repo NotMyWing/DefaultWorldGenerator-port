@@ -74,7 +74,7 @@ public class WorldTypeNode extends StructNode {
             }
             table.put(f,f.init.apply(current));
         }
-        Log.info(table.toString());
+        //Log.info(table.toString());
     }
 
     @Override

@@ -2,11 +2,15 @@ package com.ezrol.terry.minecraft.defaultworldgenerator.lib;
 
 import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings({"unused,WeakerAccess", "SameParameterValue"})
 public class Log {
+
+    public static Logger modLog;
+
     public static void log(Level logLevel, Object object) {
-        FMLLog.log(Reference.MOD_NAME, logLevel, String.valueOf(object));
+        modLog.log(logLevel, String.valueOf(object));
     }
 
     public static void all(Object object) {

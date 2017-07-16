@@ -11,10 +11,6 @@ import java.io.File;
  */
 public class CommonProxy {
 
-    public File getDefaultWorldData(){
-        return new File((new File("")).getAbsoluteFile(),"DefaultWorldData");
-    }
-
     public void init(FMLInitializationEvent event){
         //per side init
     }

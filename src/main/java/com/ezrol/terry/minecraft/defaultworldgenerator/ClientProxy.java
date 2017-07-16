@@ -16,11 +16,6 @@ import java.io.File;
 @SuppressWarnings("unused,WeakerAccess")
 public class ClientProxy extends CommonProxy{
     @Override
-    public File getDefaultWorldData() {
-        return new File(Minecraft.getMinecraft().mcDataDir.getAbsoluteFile(),"DefaultWorldData");
-    }
-
-    @Override
     public void init(FMLInitializationEvent event) {
         GuiReflectHelper.initReflect();
         MinecraftForge.EVENT_BUS.register(new GuiEvents());

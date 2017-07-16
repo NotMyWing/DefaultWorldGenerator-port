@@ -7,11 +7,13 @@ import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Optional;
+import java.util.UUID;
 
 public class ConfigurationFile {
     private byte[] currentData;
     private File location;
-    SettingsRoot settings;
+    private SettingsRoot settings;
 
     public ConfigurationFile(File loc){
         location=loc;
@@ -28,6 +30,7 @@ public class ConfigurationFile {
     public void restoreSettings(){
         if(currentData == null) {
             settings = new SettingsRoot(null);
+            writeToDisk();
         }
         else{
             try{
@@ -49,6 +52,7 @@ public class ConfigurationFile {
                 Log.error("Error parsing config: " + e);
                 Log.info("using internal configuration");
                 settings = new SettingsRoot(null);
+                writeToDisk();
             }
         }
     }
@@ -62,13 +66,16 @@ public class ConfigurationFile {
             if(location != null && location.exists()) {
                 currentData = Files.readAllBytes(location.toPath());
             } else {
-                Log.info("Config file not found, using internal defaults (" + location.toString() + ")");
+                Log.info("Config file not found, using internal defaults (" +
+                        (location == null ? "NULL" : location.toString()) + ")");
             }
+            restoreSettings();
         } catch (IOException e) {
             Log.error("Unable to read file: " + location.toString());
             Log.error("Assuming config file is blank");
+            restoreSettings();
+            writeToDisk();
         }
-        restoreSettings();
     }
 
     /**
@@ -76,6 +83,21 @@ public class ConfigurationFile {
      */
     public SettingsRoot getSettings(){
         return settings;
+    }
+
+    /**
+     * Lookup the WorldTypeNode based on a provided UUID
+     *
+     * @param id the UUID to lookup
+     * @return The node with the provided UUID if found
+     */
+    public Optional<WorldTypeNode> lookupUUID(UUID id){
+        for(WorldTypeNode n : settings.getWorldList()){
+            if(((UuidTypeNode)n.getField(WorldTypeNode.Fields.UUID)).getValue().equals(id)){
+                return(Optional.of(n));
+            }
+        }
+        return Optional.empty();
     }
 
     public void writeToDisk(){

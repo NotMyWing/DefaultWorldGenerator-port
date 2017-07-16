@@ -45,3 +45,8 @@ defaultworldgenerator-port.config.gui.worldtype.title=Select A World Type
 
 defaultworldgenerator-port.config.gui.list.datapacks=World Data Packs (directory name must be a-z, 0-9 or _)
 defaultworldgenerator-port.config.gui.list.commands=World Load Commands (Run on Server Start)
+
+defaultworldgenerator-port.chooseworld.gui.title=Choose Your World
+defaultworldgenerator-port.chooseworld.gui.select=Next
+
+defaultworldgenerator-port.newworld.gui.name=New %s
