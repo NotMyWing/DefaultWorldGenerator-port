@@ -10,9 +10,7 @@ import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Reference;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Sha384;
 import net.minecraft.world.storage.ISaveHandler;
-import sun.security.provider.ConfigFile;
 
-import javax.management.RuntimeErrorException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,6 +18,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 /**
+ * From the world, wrap the runtime settings
+ *
  * Created by ezterry on 7/15/17.
  */
 public class WorldWrapper {
@@ -83,6 +83,8 @@ public class WorldWrapper {
 
         tmp= Huffstruct.dumpData(settings);
         try {
+            //noinspection ResultOfMethodCallIgnored
+            runtimeSettingFile.getParentFile().mkdirs();
             Files.write(runtimeSettingFile.toPath(),tmp);
         } catch (IOException e) {
             Log.error(String.format("Error writing file %s: %s",runtimeSettingFile.getName(),e.toString()));
@@ -116,6 +118,7 @@ public class WorldWrapper {
                     File file = new File(dir,el);
                     if(file.getName().equals(".") || file.getName().equals("..")){
                         //this is not supposed to be listed but... skip in case
+                        //noinspection UnnecessaryContinue
                         continue;
                     }
                     else if(file.isDirectory()){
