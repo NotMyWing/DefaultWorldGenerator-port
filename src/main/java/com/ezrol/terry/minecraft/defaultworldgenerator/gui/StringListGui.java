@@ -197,7 +197,7 @@ public class StringListGui extends GuiScreen {
             this.width=screen_width-16;
             this.top=50;
             this.bottom=screen_height-50;
-            this.height=bottom-50;
+            this.height=bottom;
         }
 
         @Override

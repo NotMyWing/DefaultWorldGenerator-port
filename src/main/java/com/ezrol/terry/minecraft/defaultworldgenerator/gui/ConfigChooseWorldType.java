@@ -26,6 +26,7 @@ public class ConfigChooseWorldType extends GuiScreen {
     private String title;
     private static int BTN_OK = 400;
 
+    @SuppressWarnings("WeakerAccess")
     public ConfigChooseWorldType(GuiScreen par, WorldTypeNode node){
         activeNode=node;
         parent=par;
@@ -56,7 +57,7 @@ public class ConfigChooseWorldType extends GuiScreen {
     private void exitScreen(){
         if(!list.selected.equals("")){
             ((StringTypeNode)activeNode.getField(WorldTypeNode.Fields.WORLD_GENERATOR)).setValue(list.selected);
-            if(list.selected != original){
+            if(!list.selected.equals(original)){
                 ((StringTypeNode)activeNode.getField(WorldTypeNode.Fields.CUSTOMIZATION_STRING)).setValue("");
             }
             this.mc.displayGuiScreen(parent);
@@ -105,7 +106,7 @@ public class ConfigChooseWorldType extends GuiScreen {
             this.width=screen_width/2;
             this.top=28;
             this.bottom=screen_height-34;
-            this.height=bottom-28;
+            this.height=bottom;
 
             selected=current;
 

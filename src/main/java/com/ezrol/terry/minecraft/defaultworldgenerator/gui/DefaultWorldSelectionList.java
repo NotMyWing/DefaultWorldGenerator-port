@@ -103,7 +103,7 @@ public class DefaultWorldSelectionList extends GuiScreen {
             this.width=this.right-this.left;
             this.top=26;
             this.bottom=screen_height-36;
-            this.height= bottom - (36+26);
+            this.height= bottom;
         }
 
         @Override
