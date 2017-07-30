@@ -334,6 +334,12 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
         if (configSeedField.textboxKeyTyped(typedChar, keyCode)) {
             return;
         }
+        if(keyCode == 1){
+            activeNode = new WorldTypeNode(Huffstruct.loadData(origData));
+            parent.saveEdit(activeNode);
+            mc.displayGuiScreen(parent);
+            return;
+        }
         super.keyTyped(typedChar, keyCode);
     }
 

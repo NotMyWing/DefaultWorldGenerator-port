@@ -83,6 +83,15 @@ public class ConfigChooseWorldType extends GuiScreen {
         list.handleMouseInput();
     }
 
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if(keyCode == 1){
+            mc.displayGuiScreen(parent);
+        } else {
+            super.keyTyped(typedChar, keyCode);
+        }
+    }
+
     private class WorldSlotList extends GuiSlot {
 
         String selected = "";

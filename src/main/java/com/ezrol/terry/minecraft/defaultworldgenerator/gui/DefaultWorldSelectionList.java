@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,6 +31,9 @@ public class DefaultWorldSelectionList extends GuiScreen {
     private String title;
     private final static int BTN_OK = 400;
     private List<WorldTypeNode> choices;
+
+    //the user provided icon cache
+    private static HashMap<String,ResourceLocation> userIcons=null;
 
     public DefaultWorldSelectionList(GuiScreen par, List<WorldTypeNode> validNodes){
         parent=par;
@@ -158,13 +162,23 @@ public class DefaultWorldSelectionList extends GuiScreen {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
             ResourceLocation drawable;
-            try {
-                BufferedImage img = ImageIO.read(new File(DefaultWorldGenerator.modSettingsDir,image));
-                drawable = this.mc.getTextureManager().getDynamicTextureLocation(
-                                image,new DynamicTexture(img));
-            } catch (Exception e) {
-                Log.error("Unable to read in icon file: " + e);
-                return;
+            if(userIcons == null){
+                userIcons = new HashMap<>();
+            }
+
+            if(userIcons.containsKey(image)){
+                drawable=userIcons.get(image);
+            }
+            else {
+                try {
+                    BufferedImage img = ImageIO.read(new File(DefaultWorldGenerator.modSettingsDir, image));
+                    drawable = this.mc.getTextureManager().getDynamicTextureLocation(
+                            image, new DynamicTexture(img));
+                    userIcons.put(image,drawable);
+                } catch (Exception e) {
+                    Log.error("Unable to read in icon file: " + e);
+                    return;
+                }
             }
 
             this.mc.getTextureManager().bindTexture(drawable);

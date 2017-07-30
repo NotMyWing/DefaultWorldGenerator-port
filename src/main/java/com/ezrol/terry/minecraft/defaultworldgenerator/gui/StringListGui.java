@@ -172,7 +172,11 @@ public class StringListGui extends GuiScreen {
         if (newStringField.textboxKeyTyped(typedChar, keyCode)) {
             return;
         }
-        super.keyTyped(typedChar, keyCode);
+        if(keyCode == 1){
+            exitScreen();
+        } else {
+            super.keyTyped(typedChar, keyCode);
+        }
     }
 
     @Override

@@ -173,6 +173,16 @@ public class ConfigWorldDataListGui extends GuiScreen implements GuiPageButtonLi
     }
 
     @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if(keyCode == 1){
+            DefaultWorldGenerator.modConfig.restoreSettings();
+            this.mc.displayGuiScreen(parent);
+        } else {
+            super.keyTyped(typedChar, keyCode);
+        }
+    }
+
+    @Override
     protected void actionPerformed(GuiButton button) throws IOException {
         ButtonIds currentButton=null;
         //get the button as a ButtonIds enum
