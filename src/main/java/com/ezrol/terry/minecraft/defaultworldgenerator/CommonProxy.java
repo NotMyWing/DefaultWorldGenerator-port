@@ -3,7 +3,6 @@ package com.ezrol.terry.minecraft.defaultworldgenerator;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
-import java.io.File;
 
 /**
  * Common proxy for server vs client logic

@@ -9,10 +9,13 @@ import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.storage.WorldInfo;
 
 import java.io.IOException;
 
+/**
+ * The replacement Create world screen, where the defaults are pre-set for the user based on a mod pack
+ * creator's settings.
+ */
 public class GuiCreateCustomWorld extends GuiCreateWorld {
     private WorldTypeNode presetData;
     private boolean cfgLockWorldGenerator;

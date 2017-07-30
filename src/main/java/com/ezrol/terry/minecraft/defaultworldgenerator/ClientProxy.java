@@ -2,11 +2,9 @@ package com.ezrol.terry.minecraft.defaultworldgenerator;
 
 import com.ezrol.terry.minecraft.defaultworldgenerator.events.GuiEvents;
 import com.ezrol.terry.minecraft.defaultworldgenerator.gui.GuiReflectHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
-import java.io.File;
 
 /**
  * Client only logic

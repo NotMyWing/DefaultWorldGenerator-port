@@ -13,9 +13,10 @@ import java.util.List;
  */
 public class StringTypeNode extends StructNode {
     private String value;
-    Charset utf8;
+    private Charset utf8;
 
-    public StringTypeNode(StructNode base,String def){
+    @SuppressWarnings("WeakerAccess")
+    public StringTypeNode(StructNode base, String def){
         utf8=Charset.forName("UTF-8");
 
         if(base == null || base.getBinaryString() == null){

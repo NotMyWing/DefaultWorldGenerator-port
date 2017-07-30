@@ -33,6 +33,7 @@ public class GuiReflectHelper {
     //GuiCreateWorld methods
     public static Method updateDisplayState;
 
+    @SuppressWarnings("JavaReflectionMemberAccess")
     public static void initReflect() {
         /*
          * determine if we are in dev or not, then load the private

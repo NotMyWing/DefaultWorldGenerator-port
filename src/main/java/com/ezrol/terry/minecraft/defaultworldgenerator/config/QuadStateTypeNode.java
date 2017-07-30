@@ -30,6 +30,7 @@ public class QuadStateTypeNode extends StructNode {
 
     private States value;
 
+    @SuppressWarnings("WeakerAccess")
     public QuadStateTypeNode(StructNode base, States def){
         value=def;
         if(base != null && base.getBinaryString() != null){

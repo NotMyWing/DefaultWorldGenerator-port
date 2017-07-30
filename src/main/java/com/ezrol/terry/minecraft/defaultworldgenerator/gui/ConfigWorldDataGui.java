@@ -11,7 +11,6 @@ import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 import java.util.UUID;
-import java.util.function.Function;
 
 /**
  * Configuration of the default world settings
@@ -51,6 +50,7 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
     //position references
     private int leftRow=0;
     private int rightRow=0;
+    @SuppressWarnings("FieldCanBeLocal")
     private int rowWidth=10;
 
     //on screen text fields
@@ -61,6 +61,7 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
 
     private String newUUID=null;
 
+    @SuppressWarnings("WeakerAccess")
     public ConfigWorldDataGui(WorldTypeNode node, ConfigWorldDataListGui par){
         parent=par;
         title = I18n.format("defaultworldgenerator-port.config.gui.world.title");
@@ -80,9 +81,7 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
         stateValues[3]=I18n.format("defaultworldgenerator-port.config.gui.state.forced");
 
         //png file toggle choices
-        pngFiles=DefaultWorldGenerator.modSettingsDir.list((dir, name) -> {
-            return name != null && name.endsWith(".png");
-        });
+        pngFiles=DefaultWorldGenerator.modSettingsDir.list((dir, name) -> name != null && name.endsWith(".png"));
         pngFiles=ArrayUtils.add(pngFiles,0,"NONE");
     }
 
@@ -274,7 +273,7 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
         String generator = ((StringTypeNode)activeNode.getField(WorldTypeNode.Fields.WORLD_GENERATOR)).getValue();
 
         class GuiFakeNewWorld extends GuiCreateWorld {
-            public GuiFakeNewWorld() {
+            private GuiFakeNewWorld() {
                 super(ConfigWorldDataGui.this);
                 this.chunkProviderSettingsJson=((StringTypeNode)activeNode.getField(WorldTypeNode.Fields.CUSTOMIZATION_STRING)).getValue();
             }
@@ -425,6 +424,7 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
 
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public void setEntryValue(int id, String value) {
         switch(id){
@@ -450,7 +450,8 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
         }
     }
 
-    private void drawI18n(int x,int y,int color,String key){
+    @SuppressWarnings("SameParameterValue")
+    private void drawI18n(int x, int y, int color, String key){
         drawString(
                 fontRenderer,
                 I18n.format(key),

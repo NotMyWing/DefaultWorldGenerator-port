@@ -15,8 +15,9 @@ import java.util.*;
  */
 public class RuntimeSettings extends StructNode {
     private UuidTypeNode saveUUID;
-    HashMap<String,String> savedFiles;
+    private HashMap<String,String> savedFiles;
 
+    @SuppressWarnings("WeakerAccess")
     public RuntimeSettings(StructNode base){
         List<StructNode> data=base == null ? null : base.getArray();
 
@@ -30,6 +31,7 @@ public class RuntimeSettings extends StructNode {
             saveUUID = new UuidTypeNode(saveUUID);
             return;
         }
+        //noinspection ConstantConditions
         if(data.size()>=1){
             saveUUID = new UuidTypeNode(data.get(0));
         }
@@ -46,18 +48,22 @@ public class RuntimeSettings extends StructNode {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public UUID getSaveUUID(){
         return saveUUID.getValue();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void setSaveUUID(UUID id){
         saveUUID.setValue(id);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public String getCachedChecksum(String fileName){
         return savedFiles.getOrDefault(fileName, "");
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void updateChecksum(String fileName,String checksum){
         if(checksum.equals("")){
             //remove the key
@@ -76,6 +82,7 @@ public class RuntimeSettings extends StructNode {
      * @param source Map where keys represent to be cached files. (value is unused)
      * @return list of cachedChecksums not provided by your map
      */
+    @SuppressWarnings("WeakerAccess")
     public <T> List<String> findMissing(Map<String,T> source){
         List<String> rval = new ArrayList<>();
 

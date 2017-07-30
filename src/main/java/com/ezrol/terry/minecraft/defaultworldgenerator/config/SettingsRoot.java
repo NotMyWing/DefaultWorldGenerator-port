@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class SettingsRoot extends StructNode {
     private ArrayList<WorldTypeNode> worlds;
 
+    @SuppressWarnings("WeakerAccess")
     public SettingsRoot(StructNode origRoot){
         if(origRoot == null || origRoot.getArray() == null){
             worlds=new ArrayList<>();

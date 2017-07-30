@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 /**
  * Created by ezterry on 7/9/17.
  */
+@SuppressWarnings("WeakerAccess")
 public class GuiConfigStateButton extends GuiButton {
     private String[] possibleValues;
     private int displayedValue;
@@ -39,7 +40,6 @@ public class GuiConfigStateButton extends GuiButton {
         if(displayedValue >= possibleValues.length){
             displayedValue=0;
         }
-        this.prompt = prompt;
         displayString = prompt + " " + possibleValues[displayedValue];
     }
 }

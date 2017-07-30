@@ -1,6 +1,5 @@
 package com.ezrol.terry.minecraft.defaultworldgenerator.lib;
 
-import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 

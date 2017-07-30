@@ -1,7 +1,6 @@
 package com.ezrol.terry.minecraft.defaultworldgenerator.config;
 
 import com.ezrol.terry.lib.huffstruct.StructNode;
-import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;

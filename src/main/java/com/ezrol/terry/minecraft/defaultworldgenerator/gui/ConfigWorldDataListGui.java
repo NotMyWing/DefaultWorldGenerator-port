@@ -58,11 +58,13 @@ public class ConfigWorldDataListGui extends GuiScreen implements GuiPageButtonLi
     private WorldSlotList slotList=null;
     private int nodeBeingEdited=-1;
 
+    @SuppressWarnings("WeakerAccess")
     public ConfigWorldDataListGui(GuiScreen parent){
         this.parent = parent;
         tree = DefaultWorldGenerator.modConfig.getSettings();
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected void saveEdit(WorldTypeNode value){
         if(nodeBeingEdited == -1) {
             tree.getWorldList().add(value);

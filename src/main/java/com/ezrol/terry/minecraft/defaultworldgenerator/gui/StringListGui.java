@@ -24,6 +24,7 @@ public class StringListGui extends GuiScreen {
     private String currentText;
     private GuiTextField newStringField;
 
+    @SuppressWarnings("WeakerAccess")
     public StringListGui(GuiScreen par, StringListTypeNode node, String title, Function<String,Boolean> filter){
         activeNode=node;
         parent=par;
@@ -75,6 +76,7 @@ public class StringListGui extends GuiScreen {
 
             }
 
+            @SuppressWarnings("NullableProblems")
             @Override
             public void setEntryValue(int id, String value) {
                 currentText=value;

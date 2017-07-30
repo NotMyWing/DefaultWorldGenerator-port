@@ -15,7 +15,8 @@ public class BooleanTypeNode extends StructNode {
     private static byte[] TRUE_BYTE = new byte[] { 't' };
     private static byte[] FALSE_BYTE = new byte[] { 'f' };
 
-    public BooleanTypeNode(StructNode base,Boolean def){
+    @SuppressWarnings("WeakerAccess")
+    public BooleanTypeNode(StructNode base, Boolean def){
 
         if(base == null || base.getBinaryString() == null){
             value=def;

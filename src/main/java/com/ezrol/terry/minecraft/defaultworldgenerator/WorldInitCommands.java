@@ -26,6 +26,7 @@ import java.util.Optional;
  *
  * Created by ezterry on 7/16/17.
  */
+@SuppressWarnings("WeakerAccess")
 public class WorldInitCommands {
     private WorldWrapper worldInfo;
     private boolean initDone;
