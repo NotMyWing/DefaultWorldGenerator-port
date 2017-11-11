@@ -31,6 +31,7 @@ public class WorldTypeNode extends StructNode {
         BONUS_CHEST_STATE ("bonusChestState",a -> new QuadStateTypeNode(a, STATE_DISABLED)),
         STRUCTURE_STATE ("structureState",a -> new QuadStateTypeNode(a, STATE_ENABLED)),
         WORLD_LOAD_COMMANDS ("worldLoadCommands",a -> new StringListTypeNode(a,new String[] {})),
+        PACK_MODE ("packMode", a -> new StringTypeNode(a,"any")),
         DATA_PACKS ("dataPacks",a -> new StringListTypeNode(a,new String[] {"common"}));
 
         private final String dictName;

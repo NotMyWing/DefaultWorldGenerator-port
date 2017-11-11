@@ -1,8 +1,10 @@
 package com.ezrol.terry.minecraft.defaultworldgenerator;
 
 import com.ezrol.terry.minecraft.defaultworldgenerator.config.ConfigurationFile;
+import com.ezrol.terry.minecraft.defaultworldgenerator.config.StringTypeNode;
 import com.ezrol.terry.minecraft.defaultworldgenerator.config.WorldTypeNode;
 import com.ezrol.terry.minecraft.defaultworldgenerator.datapack.WorldWrapper;
+import com.ezrol.terry.minecraft.defaultworldgenerator.integration.PackModeInterface;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Log;
 import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Reference;
 import net.minecraftforge.fml.common.Mod;
@@ -51,6 +53,36 @@ public class DefaultWorldGenerator {
     public void postInit(FMLPostInitializationEvent event) {
         modConfig.readFromDisk();
         proxy.postInit(event);
+    }
+
+    @EventHandler
+    public void serverStarted(FMLServerStartingEvent event){
+        Log.info("Verify Tweaks");
+        File datadir = event.getServer().getActiveAnvilConverter().getFile(event.getServer().getFolderName(),"data");
+        datadir = datadir.toPath().getParent().toFile();
+
+        WorldWrapper ourWorld = new WorldWrapper(datadir);
+
+        String tweaks = ((StringTypeNode)ourWorld.getWorldType().getField(WorldTypeNode.Fields.PACK_MODE)).getValue();
+        if(!tweaks.equals("any")){
+            PackModeInterface packMode = PackModeInterface.getInterface();
+            if(!tweaks.equals("packmode:" + packMode.getCurrentMode())){
+                Log.info("Pack Mode not correctly set");
+                if(packMode.packModeInstalled()){
+                    try {
+                        packMode.setNewMode(tweaks.replaceFirst("packmode:",""));
+                        Log.info("Pack mode changed, ask user to restart");
+                        proxy.wrongServerMode(tweaks);
+                    }
+                    catch (IllegalArgumentException e){
+                        Log.error("Pack mode not found? " + e);
+                    }
+                }
+                else{
+                    Log.warn("Pack mode no longer installed, but tweaks defined in DWG config");
+                }
+            }
+        }
     }
 
     @EventHandler

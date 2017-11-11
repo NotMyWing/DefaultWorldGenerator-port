@@ -6,6 +6,7 @@ import com.ezrol.terry.minecraft.defaultworldgenerator.lib.Reference;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.server.dedicated.PendingCommand;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.server.FMLServerHandler;
@@ -173,5 +174,14 @@ public class ServerProxy extends CommonProxy {
         public InvalidWorldTypeException(String message){
             super(message);
         }
+    }
+
+    @Override
+    public void wrongServerMode(String newMode) {
+        FMLCommonHandler.instance().raiseException(
+                new RuntimeException("Restart Required (to change pack mode)"),
+                "Pack mode set to: " + newMode + "\nPlease restart the Minecraft server",
+                true
+        );
     }
 }

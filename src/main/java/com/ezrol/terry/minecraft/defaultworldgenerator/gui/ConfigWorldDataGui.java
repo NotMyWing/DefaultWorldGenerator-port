@@ -3,6 +3,7 @@ package com.ezrol.terry.minecraft.defaultworldgenerator.gui;
 import com.ezrol.terry.lib.huffstruct.Huffstruct;
 import com.ezrol.terry.minecraft.defaultworldgenerator.DefaultWorldGenerator;
 import com.ezrol.terry.minecraft.defaultworldgenerator.config.*;
+import com.ezrol.terry.minecraft.defaultworldgenerator.integration.PackModeInterface;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.WorldType;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -38,6 +40,7 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
     private static final int BTN_CUSTOMIZE_WORLD_ID = 211;
     private static final int BTN_LOAD_COMMANDS_ID = 212;
     private static final int BTN_DATA_PACKS_ID = 213;
+    private static final int TOGGLE_PACK_MODE = 214;
 
     //Screen title
     private final String title;
@@ -46,6 +49,7 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
     private String[] booleanValues;
     private String[] stateValues;
     private String[] pngFiles;
+    private String[] packModes;
 
     //position references
     private int leftRow=0;
@@ -83,6 +87,14 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
         //png file toggle choices
         pngFiles=DefaultWorldGenerator.modSettingsDir.list((dir, name) -> name != null && name.endsWith(".png"));
         pngFiles=ArrayUtils.add(pngFiles,0,"NONE");
+
+        //set pack modes
+        List<String> modes = PackModeInterface.getInterface().getPackModes();
+        modes.add(0,"any");
+        for(int i=1;i<modes.size();i++){
+            modes.set(i,"packmode:" + modes.get(i));
+        }
+        packModes=modes.toArray(new String[0]);
     }
 
     private String quadStateToBtn(QuadStateTypeNode n){
@@ -121,6 +133,25 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
         leftRow = this.width/7;
         rightRow = (this.width/2)+8;
         rowWidth = ((this.width/7)*5)/2-8;
+
+        //try to force width on narrow view
+        if(rowWidth < 175){
+            if((this.width / 2) - 13 > 175){
+                leftRow = (this.width/2)-183;
+                rowWidth = 175;
+            }
+            else{
+                leftRow = 5;
+                rightRow = (this.width/2)+8;
+                rowWidth = ((this.width)/2)-13;
+            }
+        }
+
+        //to prevent buttons from getting to wide, cap row width at 375
+        if(rowWidth > 375){
+            leftRow = (this.width/2)-383;
+            rowWidth = 375;
+        }
 
         this.buttonList.add(new GuiButton(BTN_REVERT_ID,
                 leftRow,
@@ -172,6 +203,16 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
                 pngFiles,
                 icon));
 
+        if(packModes.length > 1){
+            this.buttonList.add(new GuiConfigStateButton(TOGGLE_PACK_MODE,
+                    rightRow,
+                    4,
+                    rowWidth,
+                    18,
+                    I18n.format("defaultworldgenerator-port.config.toggle.packmode"),
+                    packModes,
+                    ((StringTypeNode)activeNode.getField(WorldTypeNode.Fields.PACK_MODE)).getValue()));
+        }
         //The structure/bonus chest state values
         this.buttonList.add(new GuiConfigStateButton(TOGGLE_BONUSCHEST_ID,
                 leftRow,
@@ -232,7 +273,7 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
         configNameTextField.setGuiResponder(this);
         configNameTextField.setCursorPositionZero();
 
-        configDescriptionField = new GuiTextField(TXT_DESCRIPTION_ID, fontRenderer, leftRow,69,rowWidth * 2 + 16,18);
+        configDescriptionField = new GuiTextField(TXT_DESCRIPTION_ID, fontRenderer, leftRow,69,(rightRow + rowWidth)-leftRow,18);
         configDescriptionField.setMaxStringLength(512);
         configDescriptionField.setText(((StringTypeNode)activeNode.getField(WorldTypeNode.Fields.CONFIGURATION_DESC)).getValue());
         configDescriptionField.setGuiResponder(this);
@@ -392,6 +433,11 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
                 toggle.itterValue();
                 setQuadStateFromBtn(activeNode.getField(WorldTypeNode.Fields.BONUS_CHEST_STATE),toggle.getStateValue());
                 break;
+            case TOGGLE_PACK_MODE:
+                toggle=((GuiConfigStateButton)button);
+                toggle.itterValue();
+                ((StringTypeNode) activeNode.getField(WorldTypeNode.Fields.PACK_MODE)).setValue(toggle.getStateValue());
+                break;
             case BTN_SET_WORLD_TYPE_ID:
                 this.mc.displayGuiScreen(
                         new ConfigChooseWorldType(this,activeNode));
@@ -466,7 +512,12 @@ public class ConfigWorldDataGui extends GuiScreen implements GuiPageButtonList.G
         drawDefaultBackground();
         Gui.drawRect(0,24,width,height,0x55000000);
         drawHorizontalLine(0,width,24,0xff000000);
-        drawCenteredString(fontRenderer, title, width / 2, 8, 0xffffff);
+        if(packModes.length > 1) {
+            drawCenteredString(fontRenderer, title, leftRow + (rowWidth/2), 8, 0xffffff);
+        }
+        else{
+            drawCenteredString(fontRenderer, title, width / 2, 8, 0xffffff);
+        }
 
         drawI18n(leftRow,26,0xffffff,"defaultworldgenerator-port.config.gui.world.name");
         configNameTextField.drawTextBox();

@@ -16,4 +16,7 @@ public class CommonProxy {
     public void postInit(FMLPostInitializationEvent event) {
         //per side postInit
     }
+    public void wrongServerMode(String newMode) {
+        //invalid server mode
+    }
 }
